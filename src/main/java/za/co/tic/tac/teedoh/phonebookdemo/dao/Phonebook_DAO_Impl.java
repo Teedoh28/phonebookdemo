@@ -34,23 +34,10 @@ public class Phonebook_DAO_Impl implements IPhonebook_DAO {
     public List<Phonebook> getAllPhonebookEntry() {
         Session currentSession = sessionFactory.getCurrentSession();
         String hql = "SELECT * FROM Phonebook";
-        Query query=currentSession.createSQLQuery(hql);
+        Query query=currentSession.createSQLQuery(hql).addEntity(Phonebook.class);
         //Query query = currentSession.createQuery(hql);
         List<Phonebook> list=(List<Phonebook>)query.getResultList();
-
-        List<Phonebook> phonebookList = new ArrayList<>();
-        for( Object[] row : (List<Object[]>)query.getResultList()){
-            Phonebook phonebook = new Phonebook();
-
-           phonebook.setPhonebookEntry_id((Integer)row[0]);
-            phonebook.setEntry_address((String)row[1]);
-            phonebook.setEntry_contactNo((String)row[2]);
-            phonebook.setEntry_email((String)row[3]);
-            phonebook.setEntry_name((String)row[4]);
-            phonebookList.add(phonebook);
-
-        }
-        return phonebookList;
+        return list;
     }
 
     @Override
